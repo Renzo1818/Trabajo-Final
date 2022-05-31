@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include"Vendedor.h"
+#include"vendedor.h"
 using namespace std;
 
 class VendedorVector
@@ -15,26 +15,31 @@ public:
 		vector<Vendedor> vectorVendedor;
 	}
 
-	void agregar(Vendedor obj)
+	void add(Vendedor obj)
 	{
 		vectorVendedor.push_back(obj);
 	}
+  Vendedor get(int pos) 
+  { 
+		return vectorVendedor[pos];
+	}
 
-	int rows() { //Cantidad de filas
+	int rows() 
+  { 
 		return vectorVendedor.size();
 	}
 
-	int getPosArray(Vendedor obj) {
-		for (int i = 0; i < rows(); i++) {
-			if (obj.getContrasena() == vectorVendedor[i].getContrasena()) {
+	int getPosArray(Vendedor obj) 
+  {
+		for (int i = 0; i < rows(); i++) 
+    {
+			if (obj.getContrasena() == vectorVendedor[i].getContrasena() && obj.getUsuario() == vectorVendedor[i].getUsuario()) {
 				return i;
 			}
 		}
 		return -1;
 	}
-	Vendedor get(int pos) { //Entregar el objeto actual, segun la posicion pasada como parametro
-		return vectorVendedor[pos];
-	}
+  
 
 	int getCorrelativoCodigo()
 	{
