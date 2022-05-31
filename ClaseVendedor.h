@@ -9,11 +9,9 @@ private:
   string contrasena;
 
 public:
-  Vendedor(int cod, string usu, string contra)
+  Vendedor()
   {
-    codigo = cod;
-    usuario = usu;
-    contrasena = contra;
+    
   }
 
   ~Vendedor()
