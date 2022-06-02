@@ -194,7 +194,7 @@ void ingresarSistema()
         {
             system("cls");
             cont++;
-            cout << "No pudo ingresar, intentelo mas tarde";
+            cout << "No pudo ingresar, intentelo mas tarde" << endl;
             system("pause");
         }
 
