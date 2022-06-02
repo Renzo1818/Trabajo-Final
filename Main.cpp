@@ -65,10 +65,9 @@ void loginAdmin()
         cout << "\t\tLogin de Usuario" << endl;
         cout << "\t\t----------------" << endl;
         cout << "\n\tUsuario:"; getline(cin, usuario);
-        cin.ignore();
         cout << "\n\tPassword:"; getline(cin, password);
         cin.ignore();
-        
+
         // comparacion para saber si el usuario es correcto
         if (usuario == USER && password == PASS)
         {
@@ -89,6 +88,7 @@ void loginAdmin()
         system("cls");
         cout << "Bienvenido al Sistema" << endl;
         //menuAdmin();
+        exit(0);
 
         
     }
@@ -134,10 +134,9 @@ void registroSistema()
     cout << "|| REGISTRO DE USUARIO ||" << "\n";
     cod = vendedorVector.getCorrelativoCodigo();
     cout << "Codigo(" << cod << ")" << endl;
-    
+    cin.ignore();
     cout << "Ingresar Usuario: ";
     getline(cin, usuario);
-    cin.ignore();
     cout << "Ingresar Contrasena: ";
     getline(cin, contrasena);
     cin.ignore();
@@ -158,10 +157,8 @@ void ingresarSistema()
 {
     string usuario;
     string contrasena;
-    bool validacion;
+    bool validacion = false;
     int cont = 0;
-
-
 
     do
     {
@@ -178,19 +175,30 @@ void ingresarSistema()
         objValidacion.setContrasena(contrasena);
 
         validacion = vendedorVector.getValidacionVendedor(objValidacion);
+
+
         if (validacion = true)
         {
             system("cls");
             cout << "\t\tBienvenido al sistema\n";
             //menuDeVentas();
+
         }
-        else
+        else if(validacion = false)
         {
             cont++;
             system("cls");
             cout << "No pudo ingresar, intentelo mas tarde";
             system("pause");
         }
+
+
     } while (validacion = false && cont < 3);
 
+
+
+
+
 }
+
+
