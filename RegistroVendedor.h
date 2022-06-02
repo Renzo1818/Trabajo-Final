@@ -13,6 +13,8 @@ public:
 	VendedorVector()
 	{
 		vector<Vendedor> vectorVendedor;
+		cargarDatosDelArchivoAlVector();
+		
 	}
 
 	void add(Vendedor obj)
@@ -36,11 +38,11 @@ public:
 			{
 				return true;
 			}
-			
+
 		}
 		return false;
 	}
-	
+
 
 	int getCorrelativoCodigo()
 	{
@@ -62,7 +64,7 @@ public:
 
 			if (archivoVendedor.is_open())
 			{
-				archivoVendedor << v.getCodigo() << ";" << v.getUsuario() << ";" << v.getContrasena() << endl;
+				archivoVendedor << v.getCodigo() << ";" << v.getUsuario() << ";" << v.getContrasena() << ";" << endl;
 				archivoVendedor.close();
 			}
 		}
@@ -71,5 +73,43 @@ public:
 			cout << "Error";
 		}
 	}
+	void cargarDatosDelArchivoAlVector() {
+		try {
+			int i;
+			string linea;
+			size_t posi;
+			string temporal[3];
+			fstream archivoVendedor;
+			archivoVendedor.open("archivoVendedores.txt", ios::in);
+			if (archivoVendedor.is_open())
+			{
+				while (!archivoVendedor.eof()) {
+					while (getline(archivoVendedor,linea)) {
+						i = 0;
+						while ((posi = linea.find(";")) != string::npos) { //string::npos es -1,termina cuando llega a ese punto
+							temporal[i] = linea.substr(0, posi);
+							linea.erase(0, posi + 1);	//Borra la palabra de la primera 
+							i++;
 
+						}
+						//Crear un Objeto de tipo Alumno
+						Vendedor objVendedor;
+						objVendedor.setCodigo(std::stoi(temporal[0]));
+						objVendedor.setUsuario(temporal[1]);
+						objVendedor.setContrasena(temporal[2]);
+
+						add(objVendedor);
+
+					}
+				}
+
+			}
+			archivoVendedor.close();
+		}
+		catch(exception e) {
+			cout << "Ocurrio un problema al momento de leer el archivo!!!";
+		}
+		
+
+	}
 };
