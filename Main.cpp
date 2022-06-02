@@ -64,9 +64,11 @@ void loginAdmin()
     {
         cout << "\t\tLogin de Usuario" << endl;
         cout << "\t\t----------------" << endl;
-        cout << "\n\tUsuario:"; getline(cin, usuario);
-        cout << "\n\tPassword:"; getline(cin, password);
         cin.ignore();
+        cout << "\n\tUsuario:";
+        cin >> usuario;
+        cout << "\n\tPassword:";
+        cin>>password;
 
         // comparacion para saber si el usuario es correcto
         if (usuario == USER && password == PASS)
@@ -131,26 +133,32 @@ void registroSistema()
     string usuario;
     string contrasena;
 
-    cout << "|| REGISTRO DE USUARIO ||" << "\n";
-    cod = vendedorVector.getCorrelativoCodigo();
-    cout << "Codigo(" << cod << ")" << endl;
-    cin.ignore();
-    cout << "Ingresar Usuario: ";
-    getline(cin, usuario);
-    cout << "Ingresar Contrasena: ";
-    getline(cin, contrasena);
-    cin.ignore();
+    do {
+        cout << "|| REGISTRO DE USUARIO ||" << "\n";
+        cod = vendedorVector.getCorrelativoCodigo();
 
-    Vendedor objVendedor;
-    objVendedor.setCodigo(cod);
-    objVendedor.setUsuario(usuario);
-    objVendedor.setContrasena(contrasena);
+        cout << "Codigo(" << cod << ")" << endl;
+        cin.ignore();
+        cout << "Ingresar Usuario: ";
+        cin >> usuario;
+        cout << "Ingresar Contrasena: ";
+        cin >> contrasena;
 
-    vendedorVector.add(objVendedor);
-    vendedorVector.grabarEnArchivoVendedor(objVendedor);
-    system("cls");
 
-    ingresarSistema();
+        Vendedor objVendedor;
+        objVendedor.setCodigo(cod);
+        objVendedor.setUsuario(usuario);
+        objVendedor.setContrasena(contrasena);
+
+        vendedorVector.add(objVendedor);
+        vendedorVector.grabarEnArchivoVendedor(objVendedor);
+        system("cls");
+
+        ingresarSistema();
+
+
+    }while()
+    
 }
 
 void ingresarSistema()
@@ -163,13 +171,12 @@ void ingresarSistema()
     do
     {
         cout << "|| LOGIN DE USUARIO ||" << "\n";
-
+        cin.ignore();
         cout << "Ingresar Usuario: ";
-        getline(cin, usuario);
-        cin.ignore();
+        cin>> usuario;
         cout << "Ingresar Contraseña: ";
-        getline(cin, contrasena);
-        cin.ignore();
+        cin>> contrasena;
+
         Vendedor objValidacion;
         objValidacion.setUsuario(usuario);
         objValidacion.setContrasena(contrasena);
@@ -200,5 +207,3 @@ void ingresarSistema()
 
 
 }
-
-
