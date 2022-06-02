@@ -133,7 +133,7 @@ void registroSistema()
     string usuario;
     string contrasena;
 
-    do {
+    
         cout << "|| REGISTRO DE USUARIO ||" << "\n";
         cod = vendedorVector.getCorrelativoCodigo();
 
@@ -157,8 +157,7 @@ void registroSistema()
         ingresarSistema();
 
 
-    }while()
-    
+   
 }
 
 void ingresarSistema()
@@ -184,17 +183,17 @@ void ingresarSistema()
         validacion = vendedorVector.getValidacionVendedor(objValidacion);
 
 
-        if (validacion = true)
+        if (validacion == true)
         {
             system("cls");
             cout << "\t\tBienvenido al sistema\n";
             //menuDeVentas();
 
         }
-        else if(validacion = false)
+        else
         {
-            cont++;
             system("cls");
+            cont++;
             cout << "No pudo ingresar, intentelo mas tarde";
             system("pause");
         }
@@ -202,8 +201,9 @@ void ingresarSistema()
 
     } while (validacion = false && cont < 3);
 
-
+    
 
 
 
 }
+
