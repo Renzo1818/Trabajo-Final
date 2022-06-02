@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 using namespace std;
 class Admin
@@ -7,24 +8,37 @@ class Admin
     string usuario;
     int contrasena;
   public:
-  Admin(int id_, string usua_, int contra_){
-    idCodigo = id_;
-    usuario = usua_;
-    contrasena = contra_;
+
+  Admin()
+  {
     
-  Admin();
-  ~Admin();
+  }
+
+//sets
+void setIdCodigo(int valor)
+{
+  idCodigo = valor;  
 }
-//get
-int getIdCodigo(){
+void setUsuario(string valor)
+{
+  usuario = valor;
+}
+void setContrasena(int valor)
+{
+  contrasena = valor;
+}
+//Get
+int getIdCodigo()
+{
   return idCodigo;
 }
-string getUsuario(){
+string getUsuario()
+{
   return usuario;
 }
-int getContrasena(){
+int getContrasena()
+{
   return contrasena;
 }
-
 
 };
