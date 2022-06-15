@@ -1,4 +1,6 @@
+#pragma once
 #include<iostream>
+#include<string>
 using namespace std;
 
 class Cliente {
@@ -8,13 +10,16 @@ private:
 	int dni;
 	int ruc;
 public:
-	Cliente(int codigo_, string nombreApe_, int dni_, int ruc_) {
+	Cliente() {
+
+	}
+	/*Cliente(int codigo_, string nombreApe_, int dni_, int ruc_) {
 		int codigoCliente = codigo_;
 		string nombreApe = nombreApe_;
 		int dni = dni_;
 		int ruc = ruc_;
 
-	}
+	}*/
 	~Cliente() {
 
 	}
