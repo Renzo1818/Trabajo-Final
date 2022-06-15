@@ -6,7 +6,6 @@
 #include "RegistroVendedor.h"
 #include "RegistroAdmin.h"
 using namespace std;
-//Globale
 
 //Crear Objeto CLASE VendedorVector
 VendedorVector vendedorVector;
@@ -24,6 +23,18 @@ void registroSistema();
 
 
 void menuVendedor();
+
+string generarContrasena(int n)
+{
+    char a;
+    string b;
+    for (int i = 0; i < n; i++)
+    {
+        a = 97 + rand() % (122 - 97);
+        b += a;
+    }
+    return b;
+}
 
 int main()
 {
@@ -72,13 +83,12 @@ void ingresoAdmin()
 }
 
 
+
 void registroAdmin()
 {
     int cod;
     string usuario;
-    //string contrasena;
-    int contrasena = 0;
-
+    string contrasena;
 
     cout << "|| REGISTRO DE ADMIN ||" << "\n";
     cod = vectorAdmin.getCorrelativoCodigo();
@@ -87,7 +97,8 @@ void registroAdmin()
     cin.ignore();
     cout << "Ingresar Usuario: ";
     cin >> usuario;
-    contrasena = 1000000 + rand() % (9999999 + 1 - 1000000);
+    srand(time(NULL));
+    contrasena = generarContrasena(8);
     cout << "Contrasena Generada: " << contrasena;
 
     Admin objAdmin;
@@ -97,6 +108,8 @@ void registroAdmin()
 
     vectorAdmin.add(objAdmin);
     vectorAdmin.grabarEnArchivoAdmin(objAdmin);
+    cout << "\n";
+    system("pause");
     system("cls");
 
     loginAdmin();
@@ -106,7 +119,7 @@ void registroAdmin()
 void loginAdmin()
 {
     string usuario;
-    int contrasena;
+    string contrasena;
     char caracter;
     bool validacion = false;
     int cont = 0;
@@ -118,9 +131,9 @@ void loginAdmin()
         cout << "Ingresar Usuario: ";
         cin >> usuario;
         cout << "Ingresar Contraseña: ";
-        //caracter = _getch();
+        caracter = _getch();
 
-        /*contrasena = "";
+        contrasena = "";
         while (caracter != 13)
         {
             if (caracter != 8)
@@ -137,8 +150,8 @@ void loginAdmin()
                 }
             }
             caracter = _getch();
-        }*/
-        cin >> contrasena;
+        }
+        //cin >> contrasena;
         Admin objAdmin;
         objAdmin.setUsuario(usuario);
         objAdmin.setContrasena(contrasena);
