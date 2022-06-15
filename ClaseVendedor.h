@@ -4,50 +4,50 @@ using namespace std;
 class Vendedor
 {
 private:
-  int codigo;
-  string usuario;
-  string contrasena;
+    int codigo;
+    string usuario;
+    string contrasena;
 
 public:
-  Vendedor()
-  {
-    
-  }
+    Vendedor()
+    {
 
-  ~Vendedor()
-  {
-    
-  }
+    }
 
-  
-  void setCodigo(int cod)
-  {
-    codigo = cod;
-  }
+    ~Vendedor()
+    {
 
-  void setUsuario(string usu)
-  {
-    usuario = usu;
-  }
+    }
 
-  void setContrasena(string contra)
-  {
-    contrasena = contra;
-  }
 
-  int getCodigo()
-  {
-    return codigo;
-  }
+    void setCodigo(int cod)
+    {
+        codigo = cod;
+    }
 
-  string getUsuario()
-  {
-    return usuario;
-  }
+    void setUsuario(string usu)
+    {
+        usuario = usu;
+    }
 
-  string getContrasena()
-  {
-    return contrasena;
-  }
+    void setContrasena(string contra)
+    {
+        contrasena = contra;
+    }
+
+    int getCodigo()
+    {
+        return codigo;
+    }
+
+    string getUsuario()
+    {
+        return usuario;
+    }
+
+    string getContrasena()
+    {
+        return contrasena;
+    }
 
 };
