@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include <conio.h>
-#include <stdlib>
+#include <cstdlib>
 #include "RegistroVendedor.h"
 #include "RegistroAdmin.h"
 using namespace std;
@@ -10,10 +10,11 @@ using namespace std;
 
 //Crear Objeto CLASE VendedorVector
 VendedorVector vendedorVector;
+AdminVector vectorAdmin;
 //Prototipos
 void menuDeOpcionesGeneral();
 void loginAdmin();
-void IngresoAdmin();
+void ingresoAdmin();
 void registroAdmin();
 //void menuAdmin();
 void loginVendedor();
@@ -26,57 +27,59 @@ void menuVendedor();
 
 int main()
 {
-  menuDeOpcionesGeneral();
+    menuDeOpcionesGeneral();
 }
 
 
 void menuDeOpcionesGeneral()
 {
-   //Declarar Variables
-  int opt;
-  do
-  {
-    cout << "\t\tMENU DE OPCIONES GENERALES\n";
-    cout << "Ingresar como Administrador	[1]\n";
-    cout << "Ingresar como vendedor	      [2]\n";
-    cout << "Salir					              [3]\n";
-    cout << "Ingrese una opcion           [1-3]:";
-    cin >> opt;
-      switch (opt)
-      {
+    //Declarar Variables
+    int opt;
+    do
+    {
+        cout << "\t\tMENU DE OPCIONES GENERALES\n";
+        cout << "Ingresar como Administrador	[1]\n";
+        cout << "Ingresar como vendedor	      [2]\n";
+        cout << "Salir					              [3]\n";
+        cout << "Ingrese una opcion           [1-3]:";
+        cin >> opt;
+        switch (opt)
+        {
         case 1:	system("cls"); ingresoAdmin(); break;
         case 2: system("cls"); loginVendedor(); break;
         case 3:	cout << "\t\t###########Gracias por tu visita##########\n";
-                exit(0);
-                break;
+            exit(0);
+            break;
         default:cout << "Ingrese una opcion correcta [1-3]" << endl;
-      }
-  } while (opt != 3);
+        }
+    } while (opt != 3);
 }
 
 
-void IngresoAdmin()
+void ingresoAdmin()
 {
-  bool validacion = false;
-  validacion = ValidacionArchivo();
-  if (valdacion == true)
-  {
-    registroAdmin();
-  }
-  else
-  {
-    loginAdmin();
-  }
+    bool validacion;
+
+    validacion = vectorAdmin.validacionArchivoVacio();
+    if (validacion == true)
+    {
+        registroAdmin();
+    }
+    else
+    {
+        loginAdmin();
+    }
 }
 
 
 void registroAdmin()
 {
-  int cod;
-  string usuario;
-  string contrasena;
+    int cod;
+    string usuario;
+    //string contrasena;
+    int contrasena = 0;
 
-    
+
     cout << "|| REGISTRO DE ADMIN ||" << "\n";
     cod = vectorAdmin.getCorrelativoCodigo();
 
@@ -84,63 +87,63 @@ void registroAdmin()
     cin.ignore();
     cout << "Ingresar Usuario: ";
     cin >> usuario;
-    contrasena = (rand()%89999999) + 10000000;
+    contrasena = 1000000 + rand() % (9999999 + 1 - 1000000);
     cout << "Contrasena Generada: " << contrasena;
 
-      Admin objA;
-        objA.setIdCodigo(cod);
-        objA.setUsuario(usuario);
-        objA.setContrasena(contrasena);
+    Admin objAdmin;
+    objAdmin.setIdCodigo(cod);
+    objAdmin.setUsuario(usuario);
+    objAdmin.setContrasena(contrasena);
 
-    vendedorAdmin.add(objA);
-    vectorAdmin.grabarEnArchivoAdmin(objA);
+    vectorAdmin.add(objAdmin);
+    vectorAdmin.grabarEnArchivoAdmin(objAdmin);
     system("cls");
 
-    LoginAdmin();
+    loginAdmin();
 }
 
 
 void loginAdmin()
 {
-  string usuario;
-  string contrasena;
-  char caracter;
-  bool validacion = false;
-  int cont = 0;
+    string usuario;
+    int contrasena;
+    char caracter;
+    bool validacion = false;
+    int cont = 0;
 
-  do
-  {
-    cout << "|| LOGIN DE USUARIO ||" << "\n";
-    cin.ignore();
-    cout << "Ingresar Usuario: ";
-    cin>> usuario;
-    cout << "Ingresar Contraseña: ";
-    caracter = _getch();
-
-    contrasena = "";
-    while(caracter != 13)
+    do
     {
-      if(caracter != 8)
-      {
-        contrasena.push_back(caracter);
-        cout<<"*";
-      }
-      else
-      {
-        if(contrasena.length() > 0)
-        {
-          cout<<"\b \b";
-          contrasena = contrasena.substr(0, contrasena.length() -1);
-        }
-      }
-      caracter = _getch(); 
-    }
-    //cin>> contrasena;
-    Admin objAdmin;
-      objAdmin.setUsuario(usuario);
-      objAdmin.setContrasena(contrasena);
+        cout << "|| LOGIN DE USUARIO ||" << "\n";
+        cin.ignore();
+        cout << "Ingresar Usuario: ";
+        cin >> usuario;
+        cout << "Ingresar Contraseña: ";
+        //caracter = _getch();
 
-      validacion = vendedorAdmin.getValidacionAdmin(objAdmin);
+        /*contrasena = "";
+        while (caracter != 13)
+        {
+            if (caracter != 8)
+            {
+                contrasena.push_back(caracter);
+                cout << "*";
+            }
+            else
+            {
+                if (contrasena.length() > 0)
+                {
+                    cout << "\b \b";
+                    contrasena = contrasena.substr(0, contrasena.length() - 1);
+                }
+            }
+            caracter = _getch();
+        }*/
+        cin >> contrasena;
+        Admin objAdmin;
+        objAdmin.setUsuario(usuario);
+        objAdmin.setContrasena(contrasena);
+
+        validacion = vectorAdmin.getValidacionAdmin(objAdmin);
 
 
         if (validacion == true)
@@ -192,7 +195,7 @@ void registroSistema()
     string usuario;
     string contrasena;
 
-    
+
     cout << "|| REGISTRO DE USUARIO ||" << "\n";
     cod = vendedorVector.getCorrelativoCodigo();
 
@@ -213,44 +216,42 @@ void registroSistema()
     vendedorVector.grabarEnArchivoVendedor(objVendedor);
     system("cls");
 
-  ingresarSistema();
+    ingresarSistema();
 }
 
 
 void ingresarSistema()
 {
-  string usuario;
-  string contrasena;
-  char caracter;
-  bool validacion = false;
-  int cont = 0;
+    string usuario;
+    string contrasena;
+    char caracter;
+    bool validacion = false;
+    int cont = 0;
 
-  do
-  {
-    cout << "|| LOGIN DE USUARIO ||" << "\n";
-    cin.ignore();
-    cout << "Ingresar Usuario: ";
-    cin>> usuario;
-    cout << "Ingresar Contraseña: ";
-    caracter = _getch();
+    do
+    {
+        cout << "|| LOGIN DE USUARIO ||" << "\n";
+        cin.ignore();
+        cout << "Ingresar Usuario: ";
+        cin >> usuario;
+        cout << "Ingresar Contraseña: ";
+        caracter = _getch();
 
-    contrasena = "";
-    while(caracter != 13)
-    {//Para que siga apereciendo los asteristos hasta que pulsemos enter
-      if(caracter != 8)
-      {//Para que siga apereciendo los asteristos apesar de borrar
-        contrasena.push_back(caracter);
-        cout<<"*";
-        }
-          else{
-            if(contrasena.length() > 0){
-              cout<<"\b \b";
-              contrasena = contrasena.substr(0, contrasena.length() -1);
+        contrasena = "";
+        while (caracter != 13){
+            if (caracter != 8){
+                contrasena.push_back(caracter);
+                cout << "*";
             }
-          }
-          caracter = _getch();
-        
-      }
+            else {
+                if (contrasena.length() > 0) {
+                    cout << "\b \b";
+                    contrasena = contrasena.substr(0, contrasena.length() - 1);
+                }
+            }
+            caracter = _getch();
+
+        }
         //cin>> contrasena;
 
         Vendedor objValidacion;
