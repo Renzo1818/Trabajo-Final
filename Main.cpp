@@ -48,17 +48,17 @@ void menuDeOpcionesGeneral()
     int opt;
     do
     {
-        cout << "\t\tMENU DE OPCIONES GENERALES\n";
-        cout << "Ingresar como Administrador	[1]\n";
-        cout << "Ingresar como vendedor	      [2]\n";
-        cout << "Salir					              [3]\n";
-        cout << "Ingrese una opcion           [1-3]:";
+        cout << "\t\t|||||| MENU DE OPCIONES GENERALES ||||||\n";
+        cout << "\n\tIngresar como Administrador	[1]\n";
+        cout << "\n\tIngresar como vendedor	        [2]\n";
+        cout << "\n\tSalir			        [3]\n";
+        cout << "\n\tIngrese una opcion              [1-3]: ";
         cin >> opt;
         switch (opt)
         {
         case 1:	system("cls"); ingresoAdmin(); break;
         case 2: system("cls"); loginVendedor(); break;
-        case 3:	cout << "\t\t###########Gracias por tu visita##########\n";
+        case 3:	cout << "\n\n\n\t\t--------Gracias por tu visita--------\n";
             exit(0);
             break;
         default:cout << "Ingrese una opcion correcta [1-3]" << endl;
@@ -71,7 +71,7 @@ void ingresoAdmin()
 {
     bool validacion;
 
-    validacion = vectorAdmin.validacionArchivoVacio();
+    validacion = vectorAdmin.validacionVectorVacio();
     if (validacion == true)
     {
         registroAdmin();
@@ -90,16 +90,16 @@ void registroAdmin()
     string usuario;
     string contrasena;
 
-    cout << "|| REGISTRO DE ADMIN ||" << "\n";
+    cout << "\t\t|||||| REGISTRO DE ADMIN ||||||" << "\n";
     cod = vectorAdmin.getCorrelativoCodigo();
 
-    cout << "Codigo(" << cod << ")" << endl;
+    cout << "\n\tCodigo(" << cod << ")" << endl;
     cin.ignore();
-    cout << "Ingresar Usuario: ";
+    cout << "\n\tIngresar Usuario: ";
     cin >> usuario;
     srand(time(NULL));
     contrasena = generarContrasena(8);
-    cout << "Contrasena Generada: " << contrasena;
+    cout << "\n\tContrasena Generada: " << contrasena;
 
     Admin objAdmin;
     objAdmin.setIdCodigo(cod);
@@ -126,11 +126,11 @@ void loginAdmin()
 
     do
     {
-        cout << "|| LOGIN DE USUARIO ||" << "\n";
+        cout << "\t\t|||||| LOGIN DE USUARIO ||||||" << "\n";
         cin.ignore();
-        cout << "Ingresar Usuario: ";
+        cout << "\n\tIngresar Usuario: ";
         cin >> usuario;
-        cout << "Ingresar Contraseña: ";
+        cout << "\n\tIngresar Contrasena: ";
         caracter = _getch();
 
         contrasena = "";
@@ -162,7 +162,7 @@ void loginAdmin()
         if (validacion == true)
         {
             system("cls");
-            cout << "\t\tBienvenido al sistema\n";
+            cout << "\t\t|||||| Bienvenido al sistema ||||||\n";
         }
         else
         {
@@ -183,17 +183,17 @@ void loginVendedor()
     int opt;
     do
     {
-        cout << "\t\tMENU DE OPCIONES\n";
-        cout << "Registrarse en el sistema   [1]\n";
-        cout << "Ingresar al sistema         [2]\n";
-        cout << "Salir					             [3]\n";
-        cout << "Ingrese una opcion [1-3]:";
+        cout << "\t\t|||||| MENU DE OPCIONES ||||||\n";
+        cout << "\n\tRegistrarse en el sistema     [1]\n";
+        cout << "\n\tIngresar al sistema           [2]\n";
+        cout << "\n\tSalir			      [3]\n";
+        cout << "\n\tIngrese una opcion            [1-3]: ";
         cin >> opt;
         switch (opt)
         {
         case 1:	system("cls"); registroSistema(); break;
         case 2: system("cls"); ingresarSistema(); break;
-        case 3:	cout << "\t\t###########Gracias por tu visita##########\n";
+        case 3:	cout << "\n\n\n\t\t-----Gracias por tu visita------\n";
             exit(0);
             break;
         default:cout << "Ingrese una opcion correcta [1-3]" << endl;
@@ -209,14 +209,14 @@ void registroSistema()
     string contrasena;
 
 
-    cout << "|| REGISTRO DE USUARIO ||" << "\n";
+    cout << "\t\t|||||| REGISTRO DE USUARIO ||||||" << "\n";
     cod = vendedorVector.getCorrelativoCodigo();
 
-    cout << "Codigo(" << cod << ")" << endl;
+    cout << "\n\tCodigo(" << cod << ")" << endl;
     cin.ignore();
-    cout << "Ingresar Usuario: ";
+    cout << "\n\tIngresar Usuario: ";
     cin >> usuario;
-    cout << "Ingresar Contrasena: ";
+    cout << "\n\tIngresar Contrasena: ";
     cin >> contrasena;
 
 
@@ -243,11 +243,11 @@ void ingresarSistema()
 
     do
     {
-        cout << "|| LOGIN DE USUARIO ||" << "\n";
+        cout << "\t\t|||||| LOGIN DE USUARIO ||||||" << "\n";
         cin.ignore();
-        cout << "Ingresar Usuario: ";
+        cout << "\n\tIngresar Usuario: ";
         cin >> usuario;
-        cout << "Ingresar Contraseña: ";
+        cout << "\n\tIngresar Contraseña: ";
         caracter = _getch();
 
         contrasena = "";
@@ -277,7 +277,7 @@ void ingresarSistema()
         if (validacion == true)
         {
             system("cls");
-            cout << "\t\tBienvenido al sistema\n";
+            cout << "\t\t|||||| Bienvenido al sistema ||||||\n";
             //menuDeVentas();
 
         }
@@ -292,4 +292,3 @@ void ingresarSistema()
 
     } while (validacion = false && cont < 3);
 }
-
