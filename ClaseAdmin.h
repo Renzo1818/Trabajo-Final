@@ -6,7 +6,7 @@ class Admin
 private:
     int idCodigo;
     string usuario;
-    int contrasena;
+    string contrasena;
 public:
 
     Admin()
@@ -23,7 +23,7 @@ public:
     {
         usuario = valor;
     }
-    void setContrasena(int valor)
+    void setContrasena(string valor)
     {
         contrasena = valor;
     }
@@ -36,7 +36,7 @@ public:
     {
         return usuario;
     }
-    int getContrasena()
+    string getContrasena()
     {
         return contrasena;
     }
