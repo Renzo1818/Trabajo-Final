@@ -15,7 +15,7 @@ public:
 	{
 		vector<Vendedor> vectorVendedor;
 		cargarDatosDelArchivoAlVector();
-		
+
 	}
 
 	void add(Vendedor obj)
@@ -23,11 +23,11 @@ public:
 		vectorVendedor.push_back(obj);
 	}
 
-	int rows() { //Cantidad de filas
+	int rows() {
 		return vectorVendedor.size();
 	}
 
-	Vendedor get(int pos) { //Entregar el objeto actual, segun la posicion pasada como parametro
+	Vendedor get(int pos) {
 		return vectorVendedor[pos];
 	}
 
@@ -47,12 +47,84 @@ public:
 
 	int getCorrelativoCodigo()
 	{
-		if (vectorVendedor.size() == 0) {
+		if (rows() == 0) {
 			return 1;
 		}
 		else
 		{
 			return vectorVendedor[vectorVendedor.size() - 1].getCodigo() + 1;
+		}
+	}
+
+	Vendedor buscaPorCodigo(int codigo)
+	{
+		Vendedor objError;
+		objError.setUsuario("Error");
+		for (int i = 0; i < rows(); i++)
+		{
+			if (codigo == get(i).getCodigo())
+			{
+				return get(i);
+			}
+		}
+		return objError;
+	}
+
+
+
+	void remove(Vendedor obj)
+	{
+		vectorVendedor.erase(vectorVendedor.begin() + getPostArray(obj));
+
+	}
+
+
+	int getPostArray(Vendedor obj)
+	{
+		for (int i = 0; i < rows(); i++)
+		{
+			if (obj.getCodigo() == get(i).getCodigo())
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+
+
+	bool modificar(Vendedor obj, string usu, string contra)
+	{
+		for (int i = 0; i < rows(); i++)
+		{
+			if (obj.getCodigo() == get(i).getCodigo())
+			{
+				vectorVendedor[i].setUsuario(usu);
+				vectorVendedor[i].setContrasena(contra);
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	void grabarModificarEliminarArchivo()
+	{
+		try
+		{
+			fstream archivoVendedor;
+			archivoVendedor.open("archivoVendedor.txt", ios::out);
+			if (archivoVendedor.is_open())
+			{
+				for (Vendedor x : vectorVendedor)
+				{
+					archivoVendedor << x.getCodigo() << ";" << x.getUsuario() << ";" << x.getContrasena() << ";" << endl;
+				}
+				archivoVendedor.close();
+			}
+		}
+		catch (exception e)
+		{
+			cout << "Ocurrio un error al grabar en el archivo";
 		}
 	}
 
@@ -74,8 +146,11 @@ public:
 			cout << "Error";
 		}
 	}
-	void cargarDatosDelArchivoAlVector() {
-		try {
+
+	void cargarDatosDelArchivoAlVector()
+	{
+		try
+		{
 			int i;
 			string linea;
 			size_t posi;
@@ -84,12 +159,15 @@ public:
 			archivoVendedor.open("archivoVendedores.txt", ios::in);
 			if (archivoVendedor.is_open())
 			{
-				while (!archivoVendedor.eof()) {
-					while (getline(archivoVendedor,linea)) {
+				while (!archivoVendedor.eof())
+				{
+					while (getline(archivoVendedor, linea))
+					{
 						i = 0;
-						while ((posi = linea.find(";")) != string::npos) { //string::npos es -1,termina cuando llega a ese punto
+						while ((posi = linea.find(";")) != string::npos)
+						{
 							temporal[i] = linea.substr(0, posi);
-							linea.erase(0, posi + 1);	//Borra la palabra de la primera 
+							linea.erase(0, posi + 1);
 							i++;
 
 						}
@@ -107,10 +185,8 @@ public:
 			}
 			archivoVendedor.close();
 		}
-		catch(exception e) {
+		catch (exception e) {
 			cout << "Ocurrio un problema al momento de leer el archivo!!!";
 		}
-		
-
 	}
 };
