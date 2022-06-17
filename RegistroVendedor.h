@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include"Vendedor.h"+
+#include"Vendedor.h"
 using namespace std;
 
 class VendedorVector
