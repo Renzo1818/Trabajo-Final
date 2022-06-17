@@ -1,29 +1,24 @@
+#pragma once
 #include <iostream>
 #include <string>
 using namespace std;
 
-class ClaseProducto
+class Producto
 {
 private:
-    int codigo;
+    int codProducto;
     string nombre;
     float precio;
     int stock;
-public:
-    ClaseProducto(int cod, string nom, float pre, int stck)
-    {
-        codigo = cod;
-        nombre = nom;
-        precio = pre;
-        stock = stck;
-    }
-    ClaseProducto();
-    ~ClaseProducto();
 
+public:
+    Producto() {
+
+    }
     //set
     void setCodigo(int valor)
     {
-        codigo = valor;
+        codProducto = valor;
     }
     void setNombre(string valor)
     {
@@ -40,7 +35,7 @@ public:
     //get
     int getCodigo()
     {
-        return codigo;
+        return codProducto;
     }
     string getNombre()
     {
@@ -56,5 +51,3 @@ public:
     }
 
 };
-
-
