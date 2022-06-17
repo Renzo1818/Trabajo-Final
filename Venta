@@ -1,0 +1,27 @@
+#pragma once
+#include <iostream>
+#include <string>
+#include "ClaseUsuario.h"
+
+using namespace std;
+
+class Venta : public Cliente
+{
+private:
+	int 	codVenta;
+	string 	fecha;
+	float 	subTotal;
+	float	igvVenta;
+	float	igv;
+	float 	total;
+	string	estado;
+	int		codVendedor;
+	string	tipoVenta; //Factura-Boleta
+
+public:
+	Venta(int codigoCliente, string nombreApe, int dni) : Cliente(codigoCliente,
+		nombreApe, dni)
+	{
+
+	}
+};
