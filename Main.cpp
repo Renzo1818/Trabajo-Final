@@ -29,8 +29,8 @@ void eliminarProductos();
 //void modificarEstadoVenta();
 //void listarVentas();
 //void cierreDeCaja();
-//void listarEmpleados();
-//void eliminarEmpleados();
+void listarEmpleados();
+void eliminarEmpleados();
 
 
 //Prototipos - VENDEDOR
@@ -320,11 +320,13 @@ void menuAdmin() {
     {
         cout << "\t\t|||||| MENU DE OPCIONES ADMIN ||||||\n";
         cout << "\n\tAgregar Productos	            [1]\n";
-        cout << "\n\tListar Productos               [2]\n";
-        cout << "\n\tModificar Productos	          [3]\n";
-        cout << "\n\tEliminar Productos			        [4]\n";
-        cout << "\n\tSalir                          [5]\n";
-        cout << "\n\tIngresar una opcion            [1-5]: ";
+        cout << "\n\tListar Productos                    [2]\n";
+        cout << "\n\tModificar Productos	            [3]\n";
+        cout << "\n\tEliminar Productos                  [4]\n";
+        cout << "\n\tListar Empleados                    [5]\n";
+        cout << "\n\tListar Eliminar                     [6]\n";
+        cout << "\n\tSalir                               [7]\n";
+        cout << "\n\tIngresar una opcion                 [1-7]: ";
         cin >> opt;
         switch (opt)
         {
@@ -332,7 +334,9 @@ void menuAdmin() {
         case 2: system("cls"); listarProductos(); break;
         case 3: system("cls"); modificarProductos(); break;
         case 4: system("cls"); eliminarProductos(); break;
-        case 5:	cout << "\n\n\n\t\t--------Gracias por tu visita--------\n";
+        case 5: system("cls"); listarEmpleados(); break;
+        case 6: system("cls"); eliminarEmpleados(); break;
+        case 7:	cout << "\n\n\n\t\t--------Gracias por tu visita--------\n";
             exit(0);
             break;
         default:cout << "Ingrese una opcion correcta [1-9]" << endl;
@@ -491,4 +495,69 @@ void eliminarProductos()
 
     }
     
+}
+void listarEmpleados()
+{
+    cout << "\t\t|||||| Menu listar empleados ||||||" << endl;
+    cout << "\t\t*************************************" << endl;
+
+    for (int i = 0; i < vendedorVector.rows(); i++)
+    {
+        cout << "\tCodigo: " << vendedorVector.get(i).getCodigo() << endl;
+        cout << "\tNombre: " << vendedorVector.get(i).getUsuario() << endl;
+        cout << "\t*************************************" << endl;
+    }
+
+    system("pause");
+    system("cls");
+}
+
+void eliminarEmpleados()
+{
+    int codigo;
+    string rpta;
+
+    cout << "\t\t|||||| Menu Eliminar Empleado ||||||" << endl;
+    cout << "\t\t************************************" << endl;
+
+    cout << "\n\tIngresar codigo a eliminar: "; cin >> codigo;
+
+    Vendedor objBuscar = vendedorVector.buscaPorCodigo(codigo);
+
+    cout << "\t\t*************************************\n";
+
+    cout << "\t\t|||||| Registro encontrado... ||||||\n";
+    cout << "\n\tCodigo (" << objBuscar.getCodigo() << ")\n";
+    cout << "\n\tUsuario: " << objBuscar.getUsuario() << "\n";
+
+    cin.ignore();
+
+    cout << "\t\t*************************************\n";
+
+    cout << "\n\tEsta seguro que desea eliminar? ";
+    cin >> rpta;
+
+    if (rpta == "SI" || rpta == "Si" || rpta == "si")
+    {
+        Vendedor objEliminar = vendedorVector.buscaPorCodigo(codigo);
+
+        if (objEliminar.getUsuario() != "Error")
+        {
+            vendedorVector.remove(objEliminar);
+
+            cout << "\n\t------Registro Eliminado Satisfactoriamente!!!------" << "\n";
+
+            vendedorVector.grabarModificarEliminarArchivo();
+        }
+        else
+        {
+            cout << "No se encontró el registro!!" << endl;
+        }
+        cout << "\n";
+        system("pause");
+        system("cls");
+    }
+    else {
+        system("cls");
+    }
 }
