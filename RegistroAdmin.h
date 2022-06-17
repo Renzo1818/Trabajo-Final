@@ -97,7 +97,7 @@ public:
 						Admin objAdmin;
 						objAdmin.setIdCodigo(std::stoi(temporal[0]));
 						objAdmin.setUsuario(temporal[1]);
-						objAdmin.setContrasena(std::stoi(temporal[2]));
+						objAdmin.setContrasena(temporal[2]);
 
 						add(objAdmin);
 					}
@@ -111,54 +111,17 @@ public:
 		}
 	}
 
-	bool validacionArchivoVacio()
+	bool validacionVectorVacio()
 	{
-			ifstream archivoAdmin;
-			archivoAdmin.open("archivoAdmin.txt", ios::in);
-			if (archivoAdmin.is_open()) {
-				while(!archivoAdmin.eof())
-				{
-					if (sizeof(archivoAdmin) == 0) {
-						return true;
-					}
-					else
-					{
-						return false;
-					}
-				}
-			}
-			archivoAdmin.close();
+		if (vectorAdmin.size() == 0)
+		{
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 		
 	}
-
-
-
-
-
-
-
-
-
-	/*bool validacionArchivoVacio()
-	{
-		try {
-			ifstream archivoAdmin;
-			archivoAdmin.open("archivoAdmin.txt", ios::in);
-			if (archivoAdmin.is_open()) {
-				if (archivoAdmin.eof())
-				{
-					return true;
-				}
-				else
-				{
-					return false;
-				}
-			}
-			archivoAdmin.close();
-		}
-		catch (exception e) {
-			return 
-		}
-	}*/
 
 };
