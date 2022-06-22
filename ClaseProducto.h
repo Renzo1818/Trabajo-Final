@@ -12,11 +12,17 @@ private:
     int stock;
 
 public:
+    Producto(int cod, string nom, float precio_, int stock_) {
+        codProducto = cod;
+        nombre = nom;
+        precio = precio_;
+        stock = stock_;
+    }
     Producto() {
 
     }
     //set
-    void setCodigo(int valor)
+    void setCodProducto(int valor)
     {
         codProducto = valor;
     }
@@ -33,7 +39,7 @@ public:
         stock = valor;
     }
     //get
-    int getCodigo()
+    int getCodProducto()
     {
         return codProducto;
     }
