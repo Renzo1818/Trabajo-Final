@@ -66,6 +66,7 @@ public:
 		{
 			cout << "Error";
 		}
+
 	}
 
 	//Validar si el vector esta vacio
