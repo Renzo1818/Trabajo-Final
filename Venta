@@ -1,27 +1,97 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "ClaseUsuario.h"
+#include "DetalleVenta.h"
 
 using namespace std;
 
-class Venta : public Cliente
-{
+class Venta {
 private:
-	int 	codVenta;
-	string 	fecha;
-	float 	subTotal;
-	float	igvVenta;
-	float	igv;
-	float 	total;
-	string	estado;
-	int		codVendedor;
-	string	tipoVenta; //Factura-Boleta
+    int codVenta;
+    int codVendedor;
+    string dni;
+    float subTotal;
+    float IGV;
+    string estado;
+    string tipoVenta;
+    float total;
 
 public:
-	Venta(int codigoCliente, string nombreApe, int dni) : Cliente(codigoCliente,
-		nombreApe, dni)
-	{
+    Venta()
+    {
 
-	}
+    }
+    //SET
+    void setCodVenta(int valor) {
+        codVenta = valor;
+    }
+    void setCodVendedor(int valor) {
+        codVendedor = valor;
+    }
+    void setDni(string valor) {
+        dni = valor;
+    }
+    void setSubTotal(float valor) {
+        subTotal = valor;
+    }
+    void setIgv(float valor) {
+        IGV = valor;
+    }
+
+    void setTotal(float valor) {
+        total = valor;
+    }
+
+    void setEstado(string valor) {
+        estado = valor;
+    }
+    void setTipoVenta(string valor) {
+        tipoVenta = valor;
+    }
+
+    //GET
+    int getCodVenta()
+    {
+        return codVenta;
+    }
+
+    int getCodVendedor()
+    {
+        return codVendedor;
+    }
+
+    string getDni()
+    {
+        return dni;
+    }
+
+    float getSubTotal()
+    {
+        return subTotal;
+    }
+
+    float getIGV()
+    {
+        return IGV;
+    }
+
+    string getEstado()
+    {
+        return estado;
+    }
+    string getTipoVenta() {
+        return tipoVenta;
+    }
+
+    float getTotal()
+    {
+        return total;
+    }
+
+    //OPERACIONES
+    float getsubTotalIGV()
+    {
+        return getSubTotal() * getIGV();
+    }
+
 };
