@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <vector>
 #include <string>
@@ -30,7 +31,7 @@ public:
     {
         for (int i = 0; i < rows(); i++)
         {
-            if (obj.getCodigo() == vectorProducto[i].getCodigo())
+            if (obj.getCodProducto() == vectorProducto[i].getCodProducto())
             {
                 return true;
             }
@@ -51,7 +52,7 @@ public:
         }
         else
         {
-            return vectorProducto[vectorProducto.size() - 1].getCodigo() + 1;
+            return vectorProducto[vectorProducto.size() - 1].getCodProducto() + 1;
         }
     }
 
@@ -66,7 +67,7 @@ public:
         objError.setNombre("Error");
         for (int i = 0; i < rows(); i++)
         {
-            if (codigo == get(i).getCodigo())
+            if (codigo == get(i).getCodProducto())
             {
                 return get(i);
             }
@@ -78,7 +79,7 @@ public:
     {
         for (int i = 0; i < rows(); i++)
         {
-            if (obj.getCodigo() == get(i).getCodigo())
+            if (obj.getCodProducto() == get(i).getCodProducto())
             {
                 return i;
             }
@@ -91,7 +92,7 @@ public:
     {
         for (int i = 0; i < rows(); i++)
         {
-            if (obj.getCodigo() == get(i).getCodigo())
+            if (obj.getCodProducto() == get(i).getCodProducto())
             {
                 vectorProducto[i].setNombre(nom);
                 vectorProducto[i].setPrecio(precio);
@@ -113,7 +114,7 @@ public:
             {
                 for (Producto x : vectorProducto)
                 {
-                    archivoProducto << x.getCodigo() << ";" << x.getNombre() << ";" << x.getPrecio() << ";" << x.getStock() << ";" << endl;
+                    archivoProducto << x.getCodProducto() << ";" << x.getNombre() << ";" << x.getPrecio() << ";" << x.getStock() << ";" << endl;
                 }
                 archivoProducto.close();
             }
@@ -135,7 +136,7 @@ public:
 
             if (archivoProducto.is_open())
             {
-                archivoProducto << v.getCodigo() << ";" << v.getNombre() << ";" << v.getPrecio() << ";" << v.getStock() << ";" << endl;
+                archivoProducto << v.getCodProducto() << ";" << v.getNombre() << ";" << v.getPrecio() << ";" << v.getStock() << ";" << endl;
                 archivoProducto.close();
             }
         }
@@ -171,7 +172,7 @@ public:
                         }
 
                         Producto objProducto;
-                        objProducto.setCodigo(std::stoi(temporal[0]));
+                        objProducto.setCodProducto(std::stoi(temporal[0]));
                         objProducto.setNombre(temporal[1]);
                         objProducto.setPrecio(std::stoi(temporal[2]));
                         objProducto.setStock(std::stoi(temporal[3]));
