@@ -52,7 +52,7 @@ public:
 		}
 		else
 		{
-			return vectorVendedor[vectorVendedor.size() - 1].getCodigo() + 1;
+			return vectorVendedor[vectorVendedor.size() - 1].getCodVendedor() + 1;
 		}
 	}
 
@@ -62,7 +62,7 @@ public:
 		objError.setUsuario("Error");
 		for (int i = 0; i < rows(); i++)
 		{
-			if (codigo == get(i).getCodigo())
+			if (codigo == get(i).getCodVendedor())
 			{
 				return get(i);
 			}
@@ -83,7 +83,7 @@ public:
 	{
 		for (int i = 0; i < rows(); i++)
 		{
-			if (obj.getCodigo() == get(i).getCodigo())
+			if (obj.getCodVendedor() == get(i).getCodVendedor())
 			{
 				return i;
 			}
@@ -96,7 +96,7 @@ public:
 	{
 		for (int i = 0; i < rows(); i++)
 		{
-			if (obj.getCodigo() == get(i).getCodigo())
+			if (obj.getCodVendedor() == get(i).getCodVendedor())
 			{
 				vectorVendedor[i].setUsuario(usu);
 				vectorVendedor[i].setContrasena(contra);
@@ -117,7 +117,7 @@ public:
 			{
 				for (Vendedor x : vectorVendedor)
 				{
-					archivoVendedor << x.getCodigo() << ";" << x.getUsuario() << ";" << x.getContrasena() << ";" << endl;
+					archivoVendedor << x.getCodVendedor() << ";" << x.getUsuario() << ";" << x.getContrasena() << ";" << endl;
 				}
 				archivoVendedor.close();
 			}
@@ -133,11 +133,11 @@ public:
 		try
 		{
 			fstream archivoVendedor;
-			archivoVendedor.open("archivoVendedores.txt", ios::app);
+			archivoVendedor.open("archivoVendedor.txt", ios::app);
 
 			if (archivoVendedor.is_open())
 			{
-				archivoVendedor << v.getCodigo() << ";" << v.getUsuario() << ";" << v.getContrasena() << ";" << endl;
+				archivoVendedor << v.getCodVendedor() << ";" << v.getUsuario() << ";" << v.getContrasena() << ";" << endl;
 				archivoVendedor.close();
 			}
 		}
@@ -156,7 +156,7 @@ public:
 			size_t posi;
 			string temporal[3];
 			fstream archivoVendedor;
-			archivoVendedor.open("archivoVendedores.txt", ios::in);
+			archivoVendedor.open("archivoVendedor.txt", ios::in);
 			if (archivoVendedor.is_open())
 			{
 				while (!archivoVendedor.eof())
@@ -173,7 +173,7 @@ public:
 						}
 						//Crear un Objeto de tipo Alumno
 						Vendedor objVendedor;
-						objVendedor.setCodigo(std::stoi(temporal[0]));
+						objVendedor.setCodVendedor(std::stoi(temporal[0]));
 						objVendedor.setUsuario(temporal[1]);
 						objVendedor.setContrasena(temporal[2]);
 
