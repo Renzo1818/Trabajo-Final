@@ -1,10 +1,11 @@
+#pragma once
 #include <iostream>
 #include <string>
 using namespace std;
 class Vendedor
 {
 private:
-    int codigo;
+    int codVendedor;
     string usuario;
     string contrasena;
 
@@ -14,15 +15,9 @@ public:
 
     }
 
-    ~Vendedor()
+    void setCodVendedor(int cod)
     {
-
-    }
-
-
-    void setCodigo(int cod)
-    {
-        codigo = cod;
+        codVendedor = cod;
     }
 
     void setUsuario(string usu)
@@ -35,9 +30,9 @@ public:
         contrasena = contra;
     }
 
-    int getCodigo()
+    int getCodVendedor()
     {
-        return codigo;
+        return codVendedor;
     }
 
     string getUsuario()
