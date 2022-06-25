@@ -77,13 +77,13 @@ public:
     }
 
 
-    bool modificar(Venta obj, string est)
+    bool modificar(Venta obj, string sto)
     {
         for (int i = 0; i < rows(); i++)
         {
             if (obj.getCodVenta() == get(i).getCodVenta())
             {
-                vectorVenta[i].setEstado(est);
+                vectorVenta[i].setEstado(sto);
 
                 return true;
             }
@@ -102,7 +102,8 @@ public:
             {
                 for (Venta x : vectorVenta)
                 {
-                    archivoVenta << x.getCodVenta() << ";" << x.getCodVendedor() << ";" << x.getDni() << ";" << x.getTipoVenta() << ";" << x.getSubTotal() << ";" << x.getTotal() << ";" << x.getEstado() << ";" << endl;
+                    archivoVenta << x.getCodVenta() << ";" << x.getCodVendedor() << ";" << x.getDni() << ";" << x.getRuc() << ";" << x.getSubTotal() << ";" << x.getTotal() << ";" <<
+                        x.getEstado() << ";" << x.getTipoVenta() << ";" << endl;
                 }
                 archivoVenta.close();
             }
@@ -113,8 +114,6 @@ public:
         }
     }
 
-
-
     void grabarEnArchivoVenta(Venta x)
     {
         try
@@ -124,8 +123,8 @@ public:
 
             if (archivoVenta.is_open())
             {
-                archivoVenta << x.getCodVenta() << ";" << x.getCodVendedor() << ";" << x.getDni() << ";" << x.getSubTotal() << ";" <<
-                    x.getTotal() << ";" << x.getEstado() << ";" << x.getTipoVenta() << endl;
+                archivoVenta << x.getCodVenta() << ";" << x.getCodVendedor() << ";" << x.getDni() << ";" << x.getRuc() << ";" << x.getSubTotal() << ";" <<
+                    x.getTotal() << ";" << x.getEstado() << ";" << x.getTipoVenta() << ";" << endl;
                 archivoVenta.close();
             }
         }
@@ -142,7 +141,7 @@ public:
             int i;
             string linea;
             size_t posi;
-            string temporal[7];
+            string temporal[8];
             fstream archivoVenta;
 
             archivoVenta.open("archivoVenta.txt", ios::in);
@@ -164,10 +163,11 @@ public:
                         objVenta.setCodVenta(std::stoi(temporal[0]));
                         objVenta.setCodVendedor(std::stoi(temporal[1]));
                         objVenta.setDni(temporal[2]);
-                        objVenta.setSubTotal(std::stoi(temporal[3]));
-                        objVenta.setTotal(std::stoi(temporal[4]));
-                        objVenta.setEstado(temporal[5]);
-                        objVenta.setTipoVenta(temporal[6]);
+                        objVenta.setRuc(temporal[3]);
+                        objVenta.setSubTotal(std::stoi(temporal[4]));
+                        objVenta.setTotal(std::stoi(temporal[5]));
+                        objVenta.setEstado(temporal[6]);
+                        objVenta.setTipoVenta(temporal[7]);
 
                         add(objVenta);
                     }
@@ -177,7 +177,7 @@ public:
         }
         catch (exception e)
         {
-            cout << "Ocurrio un problema al momento de leer el archivo!!!";
+            cout << "Ocurrio un problema al momento de leer el archivo!!" << endl;
         }
     }
 };
