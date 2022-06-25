@@ -604,7 +604,7 @@ void registrarVenta()
     int codigoVenta;
     int codigoVendedor = 0;
     int cantidad;
-    string dni;
+    string dni, ruc;
     int codProducto;
     string rpta, confirmacion, eleccion;
     float acumulador = 0;
@@ -613,8 +613,6 @@ void registrarVenta()
     cout << "\t\t*******************************\n";
     codigoVenta = vectorVentas.getCorrelativoCodigo();
     cout << "\n\tCodigo(" << codigoVenta << ")" << endl;
-    cout << "\n\tIngresar el DNI del cliente: ";
-    cin >> dni;
     cin.ignore();
     system("cls");
 
@@ -626,7 +624,7 @@ void registrarVenta()
 
         cout << "\n\tIngresar codigo del Producto: ";
         cin >> codProducto;
-        cin.ignore();
+        system("cls");
 
         Producto objProductoBusca = vectorProductos.buscaPorCodigo(codProducto);
 
@@ -639,7 +637,6 @@ void registrarVenta()
             cout << "\n\tStock: " << objProductoBusca.getStock() << "\n";
             cout << "--------------------------------\n";
 
-            system("pause");
         }
         else
         {
@@ -651,36 +648,42 @@ void registrarVenta()
         cout << "\n\tIngresar cantidad del Producto: ";
         cin >> cantidad;
 
+        DetalleVenta objDetalleVenta;
+        objDetalleVenta.setCodVenta(codigoVenta);
+        objDetalleVenta.setCantidad(cantidad);
+        objDetalleVenta.setCodProducto(codProducto);
+        objDetalleVenta.setNombre(objProductoBusca.getNombre());
+        objDetalleVenta.setStock(objProductoBusca.getStock());
+        objDetalleVenta.setPrecio(objProductoBusca.getPrecio());
+
+
+        acumulador += objDetalleVenta.getImporte();
+
         cout << "\n\tEstas seguro de anadir los anteriores productos al carrito? [SI / Si / si]: ";
         cin >> confirmacion;
 
         if (confirmacion == "SI" || confirmacion == "Si" || confirmacion == "si")
         {
-            DetalleVenta objDetalleVenta;
-            objDetalleVenta.setCodVenta(codigoVenta);
-            objDetalleVenta.setCantidad(cantidad);
-            
-            objDetalleVenta.setCodProducto(codProducto);
-            objDetalleVenta.setNombre(objProductoBusca.getNombre());
-            objDetalleVenta.setStock(objProductoBusca.getStock());
-            objDetalleVenta.setPrecio(objProductoBusca.getPrecio());
-            objDetalleVenta.getImporte();
+            //Actualizacion Stock
+            Producto objProductoStock = vectorProductos.buscaPorCodigo(codProducto);
 
+            vectorProductos.modificarStock(vectorProductos.buscaPorCodigo(codProducto), cantidad);
+            vectorProductos.grabarModificarEliminarArchivo();
 
-            acumulador += objDetalleVenta.getImporte();
-
+            //Agregar productos al carrito
             vectorDetalle.add(objDetalleVenta);
             vectorDetalle.grabarEnArchivoDetalleVenta(objDetalleVenta);
+
+
         }
         else
         {
             system("pause");
-            registrarVenta();
         }
 
         cout << "\n\n\t\t*******************************\n";
 
-        cout << "\n\tDesear ingresar mas productos: ";
+        cout << "\n\tDesea ingresar mas productos? [SI/ Si/ si]: ";
         cin >> rpta;
 
         system("cls");
@@ -690,21 +693,18 @@ void registrarVenta()
 
     system("cls");
 
-    /*/Venta objVenta;
-    objVenta.setCodVenta(codigoVenta);
-    objVenta.setCodVendedor(codigoVendedor);
-    objVenta.setDni(dni);
-    objVenta.setSubTotal(acumulador);
-    objVenta.setIgv(0.18);
-    objVenta.setEstado("activo");*/
-
-
-    //cout << "Desea Boleta o Factura: "; cin >> eleccion;
     bool bandera;
     do
     {
         bandera = false;
-        cout << "Desea Boleta o Factura: "; cin >> eleccion;
+        //Ingrese sus datos
+        cout << "\t\t||||||GENERAR COMPRA||||||\n";
+        cout << "\n\tIngresar el DNI del cliente: ";
+        cin >> dni;
+
+        cout << "\n";
+        cout << "\n\tDesea Boleta o Factura: "; cin >> eleccion;
+        system("cls");
 
         if (eleccion == "Boleta" || eleccion == "boleta")
         {
@@ -713,6 +713,7 @@ void registrarVenta()
             objBoleta.setCodVenta(codigoVenta);
             objBoleta.setCodVendedor(codigoVendedor);
             objBoleta.setDni("-");
+            objBoleta.setRuc("-");
             objBoleta.setIgv(0);
             objBoleta.setSubTotal(0);
             objBoleta.setTotal(acumulador);
@@ -722,25 +723,62 @@ void registrarVenta()
             vectorVentas.add(objBoleta);
             vectorVentas.grabarEnArchivoVenta(objBoleta);
 
+            cout << "\t\t|||||| " << objBoleta.getTipoVenta() << " ||||||\n";
+            cout << "\t\t|||||| CARRITO ||||||\n";
+
+            cout << "\t\t--------------------------------\n";
+
+            vectorDetalle.listarDetallesVentas(objBoleta.getCodVenta());
+
+
+            cout << "\n\tTotal: " << objBoleta.getTotal() << endl;
+            cout << "\n\t||||||COMPRA REALIZADA||||||\n";
+
+            system("pause");
+            system("cls");
         }
+
+
+
         else if (eleccion == "Factura" || eleccion == "factura")
         {
+            //Ruc
+            cout << "\n\tIngrese su numero de ruc: ";
+            cin >> ruc;
+            system("pause");
+            system("cls");
             //Listar todos los productos
             Venta objFactura;
             objFactura.setCodVenta(codigoVenta);
             objFactura.setCodVendedor(codigoVendedor);
             objFactura.setDni(dni);
-            objFactura.setSubTotal(acumulador);
+            objFactura.setRuc(ruc);
             objFactura.setIgv(0.18);
-            objFactura.setTipoVenta("Factura");
-
-            
+            objFactura.setSubTotal(acumulador);
             objFactura.setTotal(objFactura.getSubTotal() - objFactura.getsubTotalIGV());
             objFactura.setEstado("activo");
+            objFactura.setTipoVenta("Factura");
+
             vectorVentas.add(objFactura);
             vectorVentas.grabarEnArchivoVenta(objFactura);
 
-            
+
+            cout << "\t\t|||||| " << objFactura.getTipoVenta() << " ||||||\n";
+            cout << "\t\t|||||| CARRITO ||||||\n";
+
+            cout << "\t\t--------------------------------\n";
+
+            vectorDetalle.listarDetallesVentas(objFactura.getCodVenta());
+
+            cout << "\n\tSub Total: " << objFactura.getSubTotal() << endl;
+            cout << "\n\tPrecio aplicando IGV: " << objFactura.getsubTotalIGV() << endl;
+            cout << "\n\tTotal: " << objFactura.getTotal() << endl;
+            cout << "\n\t||||||COMPRA REALIZADA||||||\n";
+
+
+            system("pause");
+            system("cls");
+
         }
         else
         {
@@ -749,3 +787,4 @@ void registrarVenta()
         }
     } while (bandera == true);
 }
+
