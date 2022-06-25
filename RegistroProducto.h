@@ -102,6 +102,19 @@ public:
         }
         return false;
     }
+    
+    bool modificarStock(Producto obj, int cantidad)
+    {
+        for (int i = 0; i < rows(); i++)
+        {
+            if (obj.getCodProducto() == get(i).getCodProducto())
+            {
+                vectorProducto[i].setStock(obj.getStock() - cantidad);
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     void grabarModificarEliminarArchivo()
