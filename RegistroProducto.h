@@ -102,7 +102,6 @@ public:
         }
         return false;
     }
-    
     bool modificarStock(Producto obj, int cantidad)
     {
         for (int i = 0; i < rows(); i++)
