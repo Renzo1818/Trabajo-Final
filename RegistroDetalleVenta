@@ -65,11 +65,11 @@ public:
         for (int i = 0; i < rows(); i++) {
             if (codigo == get(i).getCodVenta())
             {
-                cout << "Codigo Producto :" << get(i).getCodProducto() << endl;
-                cout << "Nombre Producto: " << get(i).getNombre() << endl;
-                cout << "Cantidad: " << get(i).getCantidad() << endl;
-                cout << "Precio: " << get(i).getPrecio() << endl;
-                cout << "\t\t--------------------------------\n";
+                cout << "\n\tCodigo Producto :" << get(i).getCodProducto() << endl;
+                cout << "\n\tNombre Producto: " << get(i).getNombre() << endl;
+                cout << "\n\tCantidad: " << get(i).getCantidad() << endl;
+                cout << "\n\tPrecio: " << get(i).getPrecio() << endl;
+                cout << "\n\t--------------------------------\n";
             }
         }
     }
