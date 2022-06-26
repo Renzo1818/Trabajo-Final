@@ -9,7 +9,9 @@ class Venta {
 private:
     int codVenta;
     int codVendedor;
+    string fecha;
     string dni;
+    string ruc;
     float subTotal;
     float IGV;
     string estado;
@@ -28,8 +30,14 @@ public:
     void setCodVendedor(int valor) {
         codVendedor = valor;
     }
+    void setFecha(string valor) {
+        fecha = valor;
+    }
     void setDni(string valor) {
         dni = valor;
+    }
+    void setRuc(string valor) {
+        ruc = valor;
     }
     void setSubTotal(float valor) {
         subTotal = valor;
@@ -59,10 +67,17 @@ public:
     {
         return codVendedor;
     }
-
+    string getFecha()
+    {
+        return fecha;
+    }
     string getDni()
     {
         return dni;
+    }
+
+    string getRuc() {
+        return ruc;
     }
 
     float getSubTotal()
@@ -70,7 +85,7 @@ public:
         return subTotal;
     }
 
-    float getIGV()
+    float getIgv()
     {
         return IGV;
     }
@@ -91,7 +106,7 @@ public:
     //OPERACIONES
     float getsubTotalIGV()
     {
-        return getSubTotal() * getIGV();
+        return getSubTotal() * getIgv();
     }
 
 };
