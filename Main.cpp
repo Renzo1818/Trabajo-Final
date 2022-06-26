@@ -1,6 +1,5 @@
 #pragma once
-#include <iostream>
-#include <string>
+#include <iostream>     
 #include <vector>
 #include <conio.h>
 #include <cstdlib>
@@ -9,10 +8,12 @@
 #include "RegistroProducto.h"
 #include "RegistroDetalleVenta.h"
 #include "RegistroVenta.h"
+
 using namespace std;
 
 //Globales
-int codigoVendedor;
+int codVendedor;
+string fecha;
 
 //Crear Objeto CLASE VendedorVector
 VendedorVector vendedorVector;
@@ -34,9 +35,10 @@ void agregarProductos();
 void listarProductos();
 void modificarProductos();
 void eliminarProductos();
-//void modificarEstadoVenta();
-//void listarVentas();
-//void cierreDeCaja();
+void listarVentas();
+void modificarEstadoVenta();
+void listarVentasCanceladas();
+void cierreDeCaja();
 void listarEmpleados();
 void eliminarEmpleados();
 
@@ -137,6 +139,7 @@ void registroAdmin()
     vectorAdmin.add(objAdmin);
     vectorAdmin.grabarEnArchivoAdmin(objAdmin);
     cout << "\n";
+    cout << "\t";
     system("pause");
     system("cls");
 
@@ -191,7 +194,6 @@ void loginAdmin()
         {
             system("cls");
             cout << "\t\t|||||| Bienvenido al sistema ||||||\n";
-            system("pause");
             system("cls");
             menuAdmin();
             
@@ -243,7 +245,6 @@ void registroSistema()
 
     cout << "\t\t|||||| REGISTRO DE USUARIO ||||||" << "\n";
     cod = vendedorVector.getCorrelativoCodigo();
-    codigoVendedor = cod;
 
     cout << "\n\tCodigo(" << cod << ")" << endl;
     cin.ignore();
@@ -304,6 +305,8 @@ void ingresarSistema()
         objValidacion.setUsuario(usuario);
         objValidacion.setContrasena(contrasena);
 
+        codVendedor = vendedorVector.BuscarPorUsuario(usuario, contrasena);
+
         validacion = vendedorVector.getValidacionVendedor(objValidacion);
 
 
@@ -311,6 +314,10 @@ void ingresarSistema()
         {
             system("cls");
             cout << "\t\t|||||| Bienvenido al sistema ||||||\n";
+            cout << "\n\tIngresar Fecha: ";
+            cin >> fecha;
+            system("pause");
+            system("cls");
             menuVendedor();
 
         }
@@ -338,18 +345,26 @@ void menuAdmin() {
         cout << "\n\tEliminar Productos                  [4]\n";
         cout << "\n\tListar Empleados                    [5]\n";
         cout << "\n\tListar Eliminar                     [6]\n";
-        cout << "\n\tSalir                               [7]\n";
-        cout << "\n\tIngresar una opcion                 [1-7]: ";
+        cout << "\n\tListar Ventas                       [7]\n";
+        cout << "\n\tCambiar estado de la venta          [8]\n";
+        cout << "\n\tListar ventas canceladas            [9]\n";
+        cout << "\n\tCierre caja                         [10]\n";
+        cout << "\n\tSalir                               [11]\n";
+        cout << "\n\tIngresar una opcion                 [1-11]: ";
         cin >> opt;
         switch (opt)
         {
         case 1:	system("cls"); agregarProductos(); break;
-        case 2: system("cls"); listarProductos(); break;
+        case 2: system("cls"); listarProductos(); system("cls"); break;
         case 3: system("cls"); modificarProductos(); break;
         case 4: system("cls"); eliminarProductos(); break;
-        case 5: system("cls"); listarEmpleados(); break;
+        case 5: system("cls"); listarEmpleados(); system("cls"); break;
         case 6: system("cls"); eliminarEmpleados(); break;
-        case 7:	cout << "\n\n\n\t\t--------Gracias por tu visita--------\n";
+        case 7: system("cls"); listarVentas(); system("pause"); system("cls"); break;
+        case 8: system("cls"); modificarEstadoVenta(); break;
+        case 9: system("cls"); listarVentasCanceladas(); system("pause"); system("cls"); break;
+        case 10:system("cls"); cierreDeCaja(); system("pause"); system("cls"); break;
+        case 11:	cout << "\n\n\n\t\t--------Gracias por tu visita--------\n";
             exit(0);
             break;
         default:cout << "Ingrese una opcion correcta [1-9]" << endl;
@@ -419,11 +434,16 @@ void listarProductos()
 void modificarProductos()
 {
     int codigo;
+
+    listarProductos();
+
     cout << "Ingrese el codigo a buscar: ";
     cin >> codigo;
     Producto objModificar = vectorProductos.buscaPorCodigo(codigo);
 
     cout << "\t\t*************************************\n";
+
+    system("cls");
 
     cout << "\t\t|||||| Registro encontrado... ||||||\n";
     cout << "\n\tCodigo (" << objModificar.getCodProducto() << ")\n";
@@ -467,12 +487,18 @@ void eliminarProductos()
 {
     int codigo;
     string rpta;
+
+    listarProductos();
+
+
     cout << "\t\t|||||| MENU ELIMINAR ||||||\n";
     cout << "\n\tIngresar codigo a eliminar: "; cin >> codigo;
 
     Producto objBuscar = vectorProductos.buscaPorCodigo(codigo);
 
     cout << "\t\t*************************************\n";
+
+    system("pause");
 
     cout << "\t\t|||||| Registro encontrado... ||||||\n";
     cout << "\n\tCodigo (" << objBuscar.getCodProducto() << ")\n";
@@ -522,7 +548,7 @@ void listarEmpleados()
     }
 
     system("pause");
-    system("cls");
+    //system("cls");
 }
 
 void eliminarEmpleados()
@@ -574,6 +600,169 @@ void eliminarEmpleados()
         system("cls");
     }
 }
+void listarVentas() {
+    cout << "\t\t|||||| VENTAS ||||||\n";
+    cout << "\t\t**************" << endl;
+
+    for (int i = 0; i < vectorVentas.rows(); i++)
+    {
+        cout << "\n\tCodigo Venta (" << vectorVentas.get(i).getCodVenta() << ")" << endl;
+        cout << "\n\tCodigo Vendedor (" << vectorVentas.get(i).getCodVendedor() << ")" << endl;
+        cout << "\n\tFecha: " << vectorVentas.get(i).getFecha() << endl;
+        cout << "\n\tEstado: " << vectorVentas.get(i).getEstado() << endl;
+        cout << "\n\tTipo de Venta: " << vectorVentas.get(i).getTipoVenta() << endl;
+        cout << "\n\tDNI del Cliente: " << vectorVentas.get(i).getDni() << endl;
+
+        if (vectorVentas.get(i).getTipoVenta() == "Boleta" || vectorVentas.get(i).getTipoVenta() == "boleta")
+        {
+            cout << "\n\tTotal: " << vectorVentas.get(i).getTotal() << endl;
+        }
+        else if (vectorVentas.get(i).getTipoVenta() == "Factura" || vectorVentas.get(i).getTipoVenta() == "factura")
+        {
+            cout << "\n\tRUC del Cliente: " << vectorVentas.get(i).getRuc() << endl;
+            cout << "\n\tSub-Total: " << vectorVentas.get(i).getSubTotal() << endl;
+            cout << "\n\tTotal: " << vectorVentas.get(i).getTotal() << endl;
+        }
+        else {
+            cout << "VENTAS NO ENCONTRADA!!!!!" << endl;
+        }
+        cout << "\t\t--------------------------------\n";
+
+    }
+
+}
+void modificarEstadoVenta()
+{
+    int codigo;
+    string estadoMod;
+
+    listarVentas();
+
+    cout << "\t\t*************************************\n";
+    cout << "\t\t|||||| Modificar Estado ||||||\n";
+    cout << "\t\t*************************************\n";
+    cout << "\n\tIngrese el codigo Venta a modificar: ";
+    cin >> codigo;
+
+    Venta objModificarEstado = vectorVentas.buscaPorCodigo(codigo);
+
+    if ( objModificarEstado.getEstado() == "ACTIVO")
+    {
+        bool estado = vectorVentas.modificarEstado(codigo, "CANCELADO");
+
+        if (estado == true)
+        {
+            cout << "\n\tEstado Modificado Satisfactoriamente!!\n";
+            vectorVentas.grabarModificarArchivo();
+        }
+        else
+        {
+            cout << "\n\tNo se edito el Estado!!\n";
+            system("pause");
+        }
+    }
+    else if (objModificarEstado.getEstado() == "CANCELADO") {
+
+        bool estado = vectorVentas.modificarEstado(codigo, "ACTIVO");
+
+        if (estado == true)
+        {
+            cout << "\n\tEstado Modificado Satisfactoriamente!!\n";
+            vectorVentas.grabarModificarArchivo();
+        }
+        else
+        {
+            cout << "\n\tNo se edito el Estado!!\n";
+            system("pause");
+        }
+    }
+    else {
+        cout << "No existe la venta!!!" << endl;
+    }
+
+    
+    system("pause");
+    system("cls");
+}
+void listarVentasCanceladas() {
+
+    cout << "\t\t|||||| LISTA DE VENTAS CANCELADAS ||||||\n";
+
+    for (int i = 0; i < vectorVentas.rows(); i++)
+    {
+
+        if (vectorVentas.get(i).getEstado() == "CANCELADO")
+        {
+            
+            cout << "\n\tCodigo Venta (" << vectorVentas.get(i).getCodVenta() << ")" << endl;
+            cout << "\n\tCodigo Vendedor (" << vectorVentas.get(i).getCodVendedor() << ")" << endl;
+            cout << "\n\tFecha: " << vectorVentas.get(i).getFecha() << endl;
+            cout << "\n\tEstado: " << vectorVentas.get(i).getEstado() << endl;
+            cout << "\n\tTipo de Venta: " << vectorVentas.get(i).getTipoVenta() << endl;
+            cout << "\n\tDNI del Cliente: " << vectorVentas.get(i).getDni() << endl;
+
+            if (vectorVentas.get(i).getTipoVenta() == "Boleta" || vectorVentas.get(i).getTipoVenta() == "boleta")
+            {
+                cout << "\n\tTotal: " << vectorVentas.get(i).getTotal() << endl;
+            }
+            else if (vectorVentas.get(i).getTipoVenta() == "Factura" || vectorVentas.get(i).getTipoVenta() == "factura")
+            {
+                cout << "\n\tRUC del Cliente: " << vectorVentas.get(i).getRuc() << endl;
+                cout << "\n\tSub-Total: " << vectorVentas.get(i).getSubTotal() << endl;
+                cout << "\n\tTotal: " << vectorVentas.get(i).getTotal() << endl;
+            }
+            else
+            {
+                cout << "VENTAS NO ENCONTRADA!!!!!" << endl;
+            }
+            cout << "\n\t--------------------------------\n";
+        }
+    }
+}
+void cierreDeCaja(){
+    string fe;
+    float acu;
+
+    cout << "\t\t|||||| CIERRE DE CAJA ||||||\n";
+    cout << "\n\tIngresar fecha: "; cin >> fe;
+
+    acu = vectorVentas.GetCierreCaja(fe);
+
+    cout << "\n\tEl cierre de caja de la fecha (" << fe << ") es: " << acu;
+
+    cout << "\n";
+
+}
+
+/*void modificarEstadoVenta()
+{
+    int codigo;
+    string estadoMod;
+
+    listarVentas();
+    cout << "\n";
+    cout << "\t\t******************************\n";
+    cout << "\t\t|||||| Modificar Estado ||||||\n";
+    cout << "\t\t*******************************\n";
+    cout << "\n\tIngrese el codigo Venta a modificar: ";
+    cin >> codigo;
+    cout << "\n\tNuevo Estado: "; 
+    cin >> estadoMod;
+
+    bool estado = vectorVentas.modificarEstado(codigo, estadoMod);
+    if (estado = true)
+    {
+        cout << "\n\tEstado Modificado Satisfactoriamente!!\n";
+        vectorVentas.grabarModificarArchivo();
+    }
+    else
+    {
+        cout << "\n\tNo se edito el Estado!!\n";
+        system("pause");
+    }
+    system("pause");
+    system("cls");
+}*/
 void menuVendedor()
 {
     //Declarar Variables
@@ -582,7 +771,7 @@ void menuVendedor()
     {
         cout << "\t\t|||||| MENU DE OPCIONES VENTAS ||||||\n";
         cout << "\n\tRegistrar Venta               [1]\n";
-        cout << "\n\tListar Compra           [2]\n";
+        cout << "\n\tListar Compra                 [2]\n";
         cout << "\n\tSalir			      [3]\n";
         cout << "\n\tIngrese una opcion            [1-3]: ";
         cin >> opt;
@@ -593,7 +782,7 @@ void menuVendedor()
         case 3:	cout << "\n\n\n\t\t-----Gracias por tu visita------\n";
             exit(0);
             break;
-        default:cout << "Ingrese una opcion correcta [1-3]" << endl;
+        default:cout << "Ingrese una opcion correcta [1-3]" << endl; system("pause"); system("cls");
         }
     } while (opt != 3);
 }
@@ -602,7 +791,6 @@ void registrarVenta()
     //vectorDetalle, vectorVentas
 
     int codigoVenta;
-    int codigoVendedor = 0;
     int cantidad;
     string dni, ruc;
     int codProducto;
@@ -648,37 +836,47 @@ void registrarVenta()
         cout << "\n\tIngresar cantidad del Producto: ";
         cin >> cantidad;
 
-        DetalleVenta objDetalleVenta;
-        objDetalleVenta.setCodVenta(codigoVenta);
-        objDetalleVenta.setCantidad(cantidad);
-        objDetalleVenta.setCodProducto(codProducto);
-        objDetalleVenta.setNombre(objProductoBusca.getNombre());
-        objDetalleVenta.setStock(objProductoBusca.getStock());
-        objDetalleVenta.setPrecio(objProductoBusca.getPrecio());
-
-
-        acumulador += objDetalleVenta.getImporte();
-
-        cout << "\n\tEstas seguro de anadir los anteriores productos al carrito? [SI / Si / si]: ";
-        cin >> confirmacion;
-
-        if (confirmacion == "SI" || confirmacion == "Si" || confirmacion == "si")
+        if (objProductoBusca.getStock() >= cantidad)
         {
-            //Actualizacion Stock
-            Producto objProductoStock = vectorProductos.buscaPorCodigo(codProducto);
+            DetalleVenta objDetalleVenta;
+            objDetalleVenta.setCodVenta(codigoVenta);
+            objDetalleVenta.setCantidad(cantidad);
+            objDetalleVenta.setCodProducto(codProducto);
+            objDetalleVenta.setNombre(objProductoBusca.getNombre());
+            objDetalleVenta.setStock(objProductoBusca.getStock());
+            objDetalleVenta.setPrecio(objProductoBusca.getPrecio());
 
-            vectorProductos.modificarStock(vectorProductos.buscaPorCodigo(codProducto), cantidad);
-            vectorProductos.grabarModificarEliminarArchivo();
+            acumulador += objDetalleVenta.getImporte();
 
-            //Agregar productos al carrito
-            vectorDetalle.add(objDetalleVenta);
-            vectorDetalle.grabarEnArchivoDetalleVenta(objDetalleVenta);
+            cout << "\n\tEstas seguro de anadir los anteriores productos al carrito? [SI / Si / si]: ";
+            cin >> confirmacion;
 
+            if (confirmacion == "SI" || confirmacion == "Si" || confirmacion == "si")
+            {
+                //Actualizacion Stock
+                Producto objProductoStock = vectorProductos.buscaPorCodigo(codProducto);
 
+                vectorProductos.modificarStock(vectorProductos.buscaPorCodigo(codProducto), cantidad);
+                vectorProductos.grabarModificarEliminarArchivo();
+
+                //Agregar productos al carrito
+                vectorDetalle.add(objDetalleVenta);
+                vectorDetalle.grabarEnArchivoDetalleVenta(objDetalleVenta);
+            }
+            else
+            {
+
+                system("pause");
+            }
         }
         else
         {
+            cout << "\n\tProducto Elegido con stock Limitado..." << endl;
+            cout << "\n\tStock del Prodcuto: " << objProductoBusca.getStock() << endl;
+            cout << "\n\tPor favor ingresar una cantidad válida!!!" << endl;
             system("pause");
+            system("cls");
+            registrarVenta();
         }
 
         cout << "\n\n\t\t*******************************\n";
@@ -711,13 +909,14 @@ void registrarVenta()
             //Listar todos los productos
             Venta objBoleta;
             objBoleta.setCodVenta(codigoVenta);
-            objBoleta.setCodVendedor(codigoVendedor);
-            objBoleta.setDni("-");
+            objBoleta.setCodVendedor(codVendedor);
+            objBoleta.setFecha(fecha);
+            objBoleta.setDni(dni);
             objBoleta.setRuc("-");
             objBoleta.setIgv(0);
             objBoleta.setSubTotal(0);
             objBoleta.setTotal(acumulador);
-            objBoleta.setEstado("activo");
+            objBoleta.setEstado("ACTIVO");
             objBoleta.setTipoVenta("Boleta");
 
             vectorVentas.add(objBoleta);
@@ -750,13 +949,14 @@ void registrarVenta()
             //Listar todos los productos
             Venta objFactura;
             objFactura.setCodVenta(codigoVenta);
-            objFactura.setCodVendedor(codigoVendedor);
+            objFactura.setCodVendedor(codVendedor);
+            objFactura.setFecha(fecha);
             objFactura.setDni(dni);
             objFactura.setRuc(ruc);
             objFactura.setIgv(0.18);
             objFactura.setSubTotal(acumulador);
             objFactura.setTotal(objFactura.getSubTotal() - objFactura.getsubTotalIGV());
-            objFactura.setEstado("activo");
+            objFactura.setEstado("ACTIVO");
             objFactura.setTipoVenta("Factura");
 
             vectorVentas.add(objFactura);
@@ -788,3 +988,42 @@ void registrarVenta()
     } while (bandera == true);
 }
 
+/*void listarVentas()
+{
+    int codVd;
+    int codVt;
+    listarEmpleados();
+    cout << "\n\tIngresar el codigo del vendedor: ";
+    cin >> codVd;
+    system("cls");
+
+    for (int i = 0; i < vectorVentas.rows(); i++) {
+        if (codVd == vectorVentas.get(i).getCodVendedor())
+        {
+            cout << "\n\tCodigo Venta (" << vectorVentas.get(i).getCodVenta() << ")" << endl;
+            cout << "\n\tEstado: " << vectorVentas.get(i).getEstado() << endl;
+            cout << "\n\tTipo de Venta: " << vectorVentas.get(i).getTipoVenta() << endl;
+            cout << "\n\tDNI del Cliente: " << vectorVentas.get(i).getDni() << endl;
+
+            cout << "\n\t----------------------------------\n";
+
+            if (vectorVentas.get(i).getTipoVenta() == "Boleta" || vectorVentas.get(i).getTipoVenta() == "boleta")
+            {
+                codVt = vectorVentas.get(i).getCodVenta();
+                vectorDetalle.listarDetallesVentas(codVt);
+                cout << "\n\tTotal: " << vectorVentas.get(i).getTotal() << endl;
+            }
+            else if (vectorVentas.get(i).getTipoVenta() == "Factura" || vectorVentas.get(i).getTipoVenta() == "factura")
+            {
+                cout << "\n\tRUC del Cliente: " << vectorVentas.get(i).getRuc() << endl;
+                codVt = vectorVentas.get(i).getCodVenta();
+                vectorDetalle.listarDetallesVentas(codVt);
+                cout << "\n\tSub-Total: " << vectorVentas.get(i).getSubTotal() << endl;
+                cout << "\n\tIGV: " << vectorVentas.get(i).getsubTotalIGV() << endl;
+                cout << "\n\tTotal: " << vectorVentas.get(i).getTotal() << endl;
+            }
+
+            cout << "\n\t--------------------------------\n";
+        }
+    }
+}*/
