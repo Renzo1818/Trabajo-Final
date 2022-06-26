@@ -14,10 +14,10 @@ public:
     {
 
     }
-
+    
     void setCodVendedor(int cod)
     {
-        codVendedor = cod;
+       codVendedor = cod;
     }
 
     void setUsuario(string usu)
