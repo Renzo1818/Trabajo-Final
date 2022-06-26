@@ -54,7 +54,7 @@ public:
 		try
 		{
 			fstream archivoAdmin;
-			archivoAdmin.open("archivoAdmin.txt", ios::app);
+			archivoAdmin.open("archivoAdmin.bin", ios::app);
 
 			if (archivoAdmin.is_open())
 			{
@@ -80,7 +80,7 @@ public:
 			string temporal[3];
 			fstream archivoAdmin;
 
-			archivoAdmin.open("archivoAdmin.txt", ios::in);
+			archivoAdmin.open("archivoAdmin.bin", ios::in);
 			if (archivoAdmin.is_open())
 			{
 				while (!archivoAdmin.eof())
