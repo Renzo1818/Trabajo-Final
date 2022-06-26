@@ -106,13 +106,24 @@ public:
 		return false;
 	}
 
+	int BuscarPorUsuario(string usuario, string contrasena)
+	{
+		for (int i = 0; i < rows(); i++)
+		{
+			if (usuario == get(i).getUsuario() && contrasena == get(i).getContrasena())
+			{
+				return get(i).getCodVendedor();
+			}
+		}
+	}
+
 
 	void grabarModificarEliminarArchivo()
 	{
 		try
 		{
 			fstream archivoVendedor;
-			archivoVendedor.open("archivoVendedor.txt", ios::out);
+			archivoVendedor.open("archivoVendedor.bin", ios::out);
 			if (archivoVendedor.is_open())
 			{
 				for (Vendedor x : vectorVendedor)
@@ -133,7 +144,7 @@ public:
 		try
 		{
 			fstream archivoVendedor;
-			archivoVendedor.open("archivoVendedor.txt", ios::app);
+			archivoVendedor.open("archivoVendedor.bin", ios::app);
 
 			if (archivoVendedor.is_open())
 			{
@@ -156,7 +167,7 @@ public:
 			size_t posi;
 			string temporal[3];
 			fstream archivoVendedor;
-			archivoVendedor.open("archivoVendedor.txt", ios::in);
+			archivoVendedor.open("archivoVendedor.bin", ios::in);
 			if (archivoVendedor.is_open())
 			{
 				while (!archivoVendedor.eof())
